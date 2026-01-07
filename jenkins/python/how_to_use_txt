@@ -1,0 +1,79 @@
+In a Jenkins stage:
+
+./run_all_gates.sh
+echo "Badge: $(cat badge.txt)"
+cat pr_comment.md
+
+Exit code will automatically fail the build if it returns 2.
+
+Notes (SEIR reality)
+
+first_seen_utc persists locally in .gate_state/.
+In Jenkins, this persistence only works if the workspace is preserved between runs.
+If your agents are ephemeral, you’ll want to store this in S3 or a small key-value store later (easy upgrade).
+
+Why we do “combined failure roll-up” (explanation)
+What problem are we solving?
+When something breaks in cloud work, the failure is rarely one thing. It’s usually a chain:
+    The EC2 instance has no role → it can’t read a secret
+    The DB is private → good
+    But the security group rule is wrong → the app can’t connect
+    The app error message is vague → you panic
+    You waste an hour staring at the wrong screen
+
+A combined gate fixes that by doing what good engineers do:
+    Stop guessing. Gather evidence. Reduce the problem.
+
+What’s a “gate”?
+A gate is a small automated checklist that answers:
+    ✅ “Is the secret accessible from this instance role?”
+    ✅ “Is the DB private?”
+    ✅ “Does the DB security group allow traffic from the EC2 security group on the right port?”
+    ❌ “Is the DB open to the world?” (instant fail)
+
+It doesn’t fix things for you.
+It tells you exactly what reality is.
+
+
+Why do we “roll up” failures?
+Because in the real world, you don’t get graded on how confident you look.
+You get judged on whether you can answer, calmly:
+    “What failed?”
+    “Where did it fail?”
+    “What evidence proves it?”
+
+If each check prints its own failures separately, overwhelmed students do this:
+    They scroll
+    They miss the real error
+    They fix the wrong thing
+    They spiral
+
+So we combine failures into one list so you can do this:
+    Read the roll-up failures
+    Fix the first one
+    Re-run
+    Repeat
+
+That’s not punishment. That’s professional debugging.
+What skill are you really learning here?
+    This isn’t about AWS CLI or jq.
+
+This is about the core operator mindset:
+    You don’t “try random things.”
+    You reduce uncertainty with evidence.
+
+That is what separates:
+
+    hobbyists
+    from
+    paid professionals
+
+Why jq summarizer?
+Because it turns noisy JSON into a clean “doctor report”:
+    What’s broken (in one screen)
+    What to fix first
+    How close you are to passing
+
+When you’re overwhelmed, the best tool is the one that makes the next action obvious.
+
+
