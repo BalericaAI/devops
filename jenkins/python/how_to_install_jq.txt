@@ -1,0 +1,89 @@
+Installing jq (Required for Gate Summaries)
+What is jq?
+    jq is a small command-line tool that reads JSON and prints only what matters.
+
+We use it so you don’t have to:
+    scroll through walls of JSON
+    guess what failed
+    panic at noise
+
+If you can install jq, you can operate professionally.
+
+Step 1: Check if jq is already installed
+
+Run:
+    jq --version
+
+If you see something like: jq-1.6
+
+  You’re done. Skip the rest. Go on a date with Lizzo
+
+If you see:
+  command not found
+    
+Then Continue below.
+
+macOS (Intel or Apple Silicon)
+Option A: Homebrew (recommended)
+
+If you have Homebrew:
+
+    brew install jq
+
+Verify: 
+    jq --version
+
+Option B: No Homebrew (manual)--> If you enjoy pain and suffering.
+
+  curl -L -o jq https://github.com/jqlang/jq/releases/latest/download/jq-macos-universal
+    chmod +x jq
+    sudo mv jq /usr/local/bin/
+
+Verify: 
+    jq --version
+
+
+  Ubuntu / Debian Linux
+
+    sudo apt update
+    sudo apt install -y jq
+
+Verify: 
+    jq --version
+
+  Windows (WSL required)
+
+Important:
+If you are using Windows, you must be inside WSL (Ubuntu) for this class.
+
+Inside WSL:
+
+  sudo apt update
+  sudo apt install -y jq
+
+Verify: 
+    jq --version
+
+  If installation fails (do not panic)
+
+If jq is not installed:
+    Your gates still run
+    Your pipeline still works
+    You just won’t get the clean summary view
+
+You can still pass the lab.
+But installing jq makes your life much easier.
+
+Then do this 
+
+./run_all_gates.sh
+./rollup_gates.sh
+./summarize_gates.sh
+
+You should see:
+    a short summary
+    a clear list of failures (or none)
+    no guessing
+
+That’s not a trick.
+That’s how professionals work.
