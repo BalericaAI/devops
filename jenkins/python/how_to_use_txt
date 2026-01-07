@@ -14,8 +14,21 @@ B) Small jq-based summarizer (clean output)
 This prints a “one screen” status summary that overwhelmed students can follow.
 summarize_gates.sh
 
+./run_all_gates.sh
+./rollup_gates.sh
+./summarize_gates.sh
 
+How to plug this into Jenkins (simple + clean)
 
+Add a stage after running gates:
+
+./run_all_gates.sh
+./rollup_gates.sh
+./summarize_gates.sh || true
+cat pr_comment.md
+
+summarize_gates.sh || true means: even if jq isn’t installed, the build doesn’t crash.
+The build still fails correctly based on run_all_gates.sh exit code.
 
 Notes (SEIR reality)
 
