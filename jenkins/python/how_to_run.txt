@@ -1,0 +1,16 @@
+In a Jenkins stage:
+
+./run_all_gates.sh
+echo "Badge: $(cat badge.txt)"
+cat pr_comment.md
+
+Exit code will automatically fail the build if it returns 2.
+
+Notes (SEIR reality)
+
+first_seen_utc persists locally in .gate_state/.
+
+In Jenkins, this persistence only works if the workspace is preserved between runs.
+If your agents are ephemeral, you’ll want to store this in S3 or a small key-value store later (easy upgrade).
+
+
