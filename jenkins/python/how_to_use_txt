@@ -6,6 +6,17 @@ cat pr_comment.md
 
 Exit code will automatically fail the build if it returns 2.
 
+./run_all_gates.sh
+./rollup_gates.sh
+cat gate_result.json | jq '.rollup.failures'
+
+B) Small jq-based summarizer (clean output)
+This prints a “one screen” status summary that overwhelmed students can follow.
+summarize_gates.sh
+
+
+
+
 Notes (SEIR reality)
 
 first_seen_utc persists locally in .gate_state/.
