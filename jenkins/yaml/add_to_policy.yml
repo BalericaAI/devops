@@ -1,0 +1,37 @@
+#Y'all had better add this or Chewbacca has the right to ride you.
+
+release_gate:
+  enabled: true
+
+  # Hard stops
+  fail_on_critical: true
+
+  # Optional thresholds (helps teach "risk as capacity")
+  max_high_findings: 10
+  max_medium_findings: 50
+
+  # Require manifest signing
+  require_signed_manifest: true
+  allowed_signers: ["minisign", "openssl"]
+
+  # Require certain outputs for auditability
+  required_files:
+    - "extracted_findings.json"
+    - "duplicate_map.json"
+    - "consolidated_security_report.md"
+    - "policy_report.json"
+    - "policy_report_post.json"
+    - "manifest.json"
+    - "manifest.sig"
+    - "manifest_signer.txt"
+    - "tickets.json"
+
+  # Required report section headings (case-insensitive substring match)
+  required_report_sections:
+    - "Executive Summary"
+    - "Findings by Source Tool"
+    - "Findings by Severity"
+    - "Findings by Category"
+    - "Suspected Duplicates"
+    - "Analyst Next Actions"
+    - "Appendix"
